@@ -27,8 +27,8 @@ export class BasePage {
   }
 
   async navigateToHomepage() {
-    const response = await this.page.goto('https://ceramicsandglass.nl/', {
-      waitUntil: 'networkidle',
+    const response = await this.page.goto('/', {
+      waitUntil: 'domcontentloaded',
       timeout: 60000,
     });
 
@@ -39,6 +39,11 @@ export class BasePage {
       console.log('[nav debug] homepage status', status, 'url', response?.url());
       console.log('[nav debug] homepage body', bodySnippet);
     }
+
+    // Fallback wait in case network stays busy due to third-party assets
+    await this.page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {
+      console.log('[nav debug] networkidle fallback timed out, continuing');
+    });
   }
 
   async navigateToAboutWork() {
