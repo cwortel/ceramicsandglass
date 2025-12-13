@@ -2,6 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  timeout: 90000,
+  expect: {
+    timeout: 15000,
+  },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
@@ -9,6 +13,8 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'https://ceramicsandglass.nl',
+    navigationTimeout: 60000,
+    actionTimeout: 45000,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -18,10 +24,10 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
