@@ -27,7 +27,18 @@ export class BasePage {
   }
 
   async navigateToHomepage() {
-    await this.page.goto('https://ceramicsandglass.nl/');
+    const response = await this.page.goto('https://ceramicsandglass.nl/', {
+      waitUntil: 'networkidle',
+      timeout: 60000,
+    });
+
+    // Surface CI-only navigation issues (e.g., 403/empty body) in logs
+    const status = response?.status();
+    if (!status || status >= 400) {
+      const bodySnippet = response ? (await response.text()).slice(0, 1000) : 'no response';
+      console.log('[nav debug] homepage status', status, 'url', response?.url());
+      console.log('[nav debug] homepage body', bodySnippet);
+    }
   }
 
   async navigateToAboutWork() {
