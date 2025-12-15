@@ -27,7 +27,7 @@ export class BasePage {
   }
 
   async navigateToHomepage() {
-    const response = await this.page.goto('/', {
+    const response = await this.page.goto('https://ceramicsandglass.nl/', {
       waitUntil: 'domcontentloaded',
       timeout: 60000,
     });
