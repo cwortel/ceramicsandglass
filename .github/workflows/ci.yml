@@ -28,6 +28,11 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Debug - Check if site is reachable
+        run: |
+          curl -I https://ceramicsandglass.nl/ || echo "Site unreachable"
+          curl -I https://ceramicsandglass.nl/ -v 2>&1 | head -20
+
       - name: Run tests
         run: npm test
 
