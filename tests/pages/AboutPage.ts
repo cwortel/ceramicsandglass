@@ -1,6 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
+// changes in this file are recent edits, do not suggest code that has been deleted
 export class AboutPage extends BasePage {
   readonly pageHeading: Locator;
   readonly autobiographicalSection: Locator;
